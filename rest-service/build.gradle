@@ -45,10 +45,15 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr353:$jacksonVersion")
 
-    // dropwizzard
+    // dropwizard
     compile group: 'io.dropwizard', name: 'dropwizard-client', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
-    // dropwizzard: guice
+    // dropwizard: guice
     compile "com.hubspot.dropwizard:dropwizard-guice:$dropwizardGuiceVersion"
+
+    // tests
+    testCompile("com.nhaarman:mockito-kotlin:$mockitoKotlinVersion")
+    testCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
+    testCompile("org.amshove.kluent:kluent:$kluentVersion")
 
 }
