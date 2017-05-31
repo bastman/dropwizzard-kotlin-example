@@ -1,5 +1,6 @@
 package com.example.demo
 
+import com.example.demo.api.resources.FooResource
 import com.example.demo.logging.AppLogger
 import io.dropwizard.Application
 import io.dropwizard.setup.Environment
@@ -11,5 +12,6 @@ class RestServiceApplication: Application<RestServiceConfiguration>() {
 
     override fun run(configuration: RestServiceConfiguration, environment: Environment) {
         LOGGER.info("run()")
+        environment.jersey().register(FooResource())
     }
 }
