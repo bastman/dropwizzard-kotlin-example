@@ -1,6 +1,8 @@
 package com.example.demo.api.resources
 
+import com.example.demo.service.FooService
 import java.time.Instant
+import javax.inject.Inject
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
@@ -9,7 +11,7 @@ import javax.ws.rs.core.Response
 //@Consumes(MediaType.APPLICATION_JSON)
 //@Produces(MediaType.APPLICATION_JSON)
 @Path("/api")
-class FooResource {
+class FooResource @Inject constructor(private val fooService:FooService){
 
     @Produces(MediaType.TEXT_PLAIN)
     @GET
@@ -23,7 +25,7 @@ class FooResource {
     @Path("/data/{id}")
     fun getData(@PathParam("id") id:String): Response {
         return Response.ok(
-                GetDataResponse(id=id, foo = "bar", modifiedAt = Instant.now())
+                GetDataResponse(id=id, foo = fooService.foo(), modifiedAt = Instant.now())
         ).build()
     }
 }
