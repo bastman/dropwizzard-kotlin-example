@@ -1,0 +1,51 @@
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
+
+
+apply plugin: 'kotlin'
+
+kotlin {
+    experimental { coroutines 'enable' }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    // kotlin coroutines
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinxCoroutinesVersion"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-nio:$kotlinxCoroutinesVersion"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlinxCoroutinesVersion"
+
+    // logging
+    //compile("net.logstash.logback:logstash-logback-encoder:$logstashLogbackEncoderVersion")
+    //compile("org.slf4j:slf4j-api:$slfApiVersion")
+
+    // jackson
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    compile("com.fasterxml.jackson.module:jackson-module-parameter-names:$jacksonVersion")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jacksonVersion")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr353:$jacksonVersion")
+
+    // dropwizzard
+    compile group: 'io.dropwizard', name: 'dropwizard-client', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+}
