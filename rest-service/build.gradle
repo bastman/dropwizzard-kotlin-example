@@ -48,4 +48,7 @@ dependencies {
     // dropwizzard
     compile group: 'io.dropwizard', name: 'dropwizard-client', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    // dropwizzard: guice
+    compile "com.hubspot.dropwizard:dropwizard-guice:$dropwizardGuiceVersion"
+
 }

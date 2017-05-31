@@ -1,6 +1,6 @@
 package com.example.demo.service
 
 //@Service
-interface FooService {
-    fun foo(): String
+interface BarService {
+    fun bar(): String
 }
