@@ -1,6 +1,8 @@
 package com.example.demo.service
 
-//@Service
+import com.google.inject.ImplementedBy
+
+@ImplementedBy(BarServiceImpl::class)
 interface BarService {
     fun bar(): String
 }

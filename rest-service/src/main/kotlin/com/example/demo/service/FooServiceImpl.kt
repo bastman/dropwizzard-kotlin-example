@@ -1,12 +1,14 @@
 package com.example.demo.service
 
-import org.jvnet.hk2.annotations.Service
+import com.example.demo.logging.AppLogger
 import javax.inject.Singleton
 
-@Service
 @Singleton
 class FooServiceImpl : FooService {
+    private val LOGGER = AppLogger.get(this::class.java)
+
     override fun foo(): String {
+        LOGGER.info("foo() $this")
         return "$this.foo()"
     }
 }

@@ -15,7 +15,7 @@ import org.junit.Test
 import javax.ws.rs.core.Response
 
 
-class FooResourceTest {
+internal class FooResourceTest {
 
     // a test module, that binds BarService (Interface) to a MockImplementation
     internal class TestModule : AbstractModule() {

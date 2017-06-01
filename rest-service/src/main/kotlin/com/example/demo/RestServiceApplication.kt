@@ -7,7 +7,6 @@ import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
 
-
 class RestServiceApplication : Application<RestServiceConfiguration>() {
     private val LOGGER = AppLogger.get(this::class.java)
 
@@ -31,8 +30,5 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
 
         environment.jersey().register(FooResource::class.java)
         // environment.lifecycle().manage(guiceBundle.injector.getInstance(TemplateHealthCheck::class.java))
-
     }
-
-
 }
