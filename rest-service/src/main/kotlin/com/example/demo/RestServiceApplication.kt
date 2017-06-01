@@ -22,7 +22,6 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
                 .build()
 
         bootstrap.addBundle(guiceBundle)
-
     }
 
     override fun run(configuration: RestServiceConfiguration, environment: Environment) {

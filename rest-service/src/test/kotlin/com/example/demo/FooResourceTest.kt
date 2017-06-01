@@ -20,8 +20,10 @@ internal class FooResourceTest {
     // a test module, that binds BarService (Interface) to a MockImplementation
     internal class TestModule : AbstractModule() {
         override fun configure() {
-            bind(BarServiceMockImpl::class.java) // register
-            bind(BarService::class.java).to(BarServiceMockImpl::class.java) // bind to interface
+            //bind(BarServiceMockImpl::class.java) // register
+            bind(BarService::class.java)
+                    .to(BarServiceMockImpl::class.java)
+                    .asEagerSingleton() // bind to interface
         }
     }
 
@@ -31,10 +33,16 @@ internal class FooResourceTest {
                     // will be modified by TestModule
                     .with(TestModule())
     )
-    private val apiResource: FooResource = injector.getInstance(FooResource::class.java)
+    private val apiResource: FooResource = injector.getInstance(
+            FooResource::class.java
+    )
+
+    init {
+        println("$this: init")
+    }
 
     @Before
-    fun before() {
+    fun setupTest() {
         apiResource shouldBeInstanceOf FooResource::class
     }
 
