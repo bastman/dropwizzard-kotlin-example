@@ -62,17 +62,20 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
         forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
 */
 
+        /*
         val dbiProvider:ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration>{
             override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {
                 return DBIFactory().build(environment, configuration.database, "database")
             }
         }
         forDbi<RestServiceConfiguration>(dbiProvider)
+        */
     }
 
     fun <C : Configuration> forDbi(dbi: ConfigAwareProvider<DBI, C>): JdbiBundle {
         return JdbiBundle.forDbi(dbi)
     }
+
 
     override fun run(configuration: RestServiceConfiguration, environment: Environment) {
         val injector = InjectorLookup.getInjector(this).get()
@@ -83,4 +86,5 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
         //environment.jersey().register(FooResource::class.java)
         // environment.lifecycle().manage(guiceBundle.injector.getInstance(TemplateHealthCheck::class.java))
     }
+
 }
