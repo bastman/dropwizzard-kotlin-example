@@ -22,7 +22,31 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
         super.initialize(bootstrap)
 
 
-        val mainBundle=GuiceBundle.builder<RestServiceConfiguration>()
+
+        //JdbiBundle.forDbi { configuration, environment ->  }
+
+       // JdbiBundle.forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
+/*
+        val jdbiBundle=GuiceBundle.builder<RestServiceConfiguration>()
+        GuiceBundle.builder()
+                .bundles(JdbiBundle.<RestServiceConfiguration>forDatabase((conf, env) -> conf.getDatabase()))
+
+        forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
+*/
+
+
+        val dbiProvider:ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration>{
+            override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {
+                val jdbi = DBIFactory().build(environment, configuration.database, "database")
+               // jdbi.onDemand()
+                return jdbi
+            }
+        }
+        val jdbiBundle = forDbi<RestServiceConfiguration>(dbiProvider)
+
+        val guiceBundle=GuiceBundle.builder<RestServiceConfiguration>()
+                .bundles(jdbiBundle)
+
                 // enable classpath scanning
                 .enableAutoConfig(javaClass.`package`.name)
 
@@ -50,26 +74,7 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
 
                 .build()
 
-        bootstrap.addBundle(mainBundle)
-        //JdbiBundle.forDbi { configuration, environment ->  }
-
-       // JdbiBundle.forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
-/*
-        val jdbiBundle=GuiceBundle.builder<RestServiceConfiguration>()
-        GuiceBundle.builder()
-                .bundles(JdbiBundle.<RestServiceConfiguration>forDatabase((conf, env) -> conf.getDatabase()))
-
-        forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
-*/
-
-        /*
-        val dbiProvider:ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration>{
-            override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {
-                return DBIFactory().build(environment, configuration.database, "database")
-            }
-        }
-        forDbi<RestServiceConfiguration>(dbiProvider)
-        */
+        bootstrap.addBundle(guiceBundle)
     }
 
     fun <C : Configuration> forDbi(dbi: ConfigAwareProvider<DBI, C>): JdbiBundle {
