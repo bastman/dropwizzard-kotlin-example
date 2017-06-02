@@ -11,12 +11,19 @@ class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
         val configuration = configuration() // access configuration
         val environment = environment() // access environment
         val bootstrap = bootstrap()  // access dropwizard bootstrap
+        val binder = binder()
 
         LOGGER.info("+++++++ configure() ++++++++")
+        LOGGER.info("binder=$binder")
         LOGGER.info("configuration=$configuration")
         LOGGER.info("environment=$environment")
         LOGGER.info("bootstrap=$bootstrap")
         LOGGER.info("++++++++++++++++++++")
+
+        // strict mode
+        binder.disableCircularProxies();
+        binder.requireExactBindingAnnotations();
+        //binder.requireExplicitBindings();
 
         // works: binding to concrete instance
         //bind(FooService::class.java).toInstance(FooServiceImpl())
