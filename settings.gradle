@@ -1,2 +1,3 @@
 include 'rest-service'
+include 'rest-service-guicy'
 

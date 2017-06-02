@@ -14,8 +14,15 @@ import org.junit.Before
 import org.junit.Test
 import javax.ws.rs.core.Response
 
-// showcase how to replace an interface binding with by TestModule override
-internal class FooResourceTest {
+// showcase how to replace an interface binding by ...
+internal class FooResourceTest2 {
+
+    // bind(Bar.class).toInstance(barMock);
+    //@Bind private val barMock: Bar? = null
+
+    // Foo depends on Bar.
+    //@Inject private val foo: Foo? = null
+
 
     // a test module, that binds BarService (Interface) to a MockImplementation
     internal class TestModule : AbstractModule() {

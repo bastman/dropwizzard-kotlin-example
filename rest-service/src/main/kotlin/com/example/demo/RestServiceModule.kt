@@ -1,12 +1,14 @@
 package com.example.demo
 
+import com.example.demo.service.FooService
+import com.example.demo.service.FooServiceImpl
 import com.google.inject.AbstractModule
 
 class RestServiceModule : AbstractModule() {
     override fun configure() {
 
         // works: binding to concrete instance
-        //bind(FooService::class.java).toInstance(FooServiceImpl())
+        bind(FooService::class.java).toInstance(FooServiceImpl())
 
         // works:
         //bind(FooServiceImpl::class.java) // register
