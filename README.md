@@ -34,3 +34,4 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 # jdbi 
 - http://xvik.github.io/dropwizard-guicey/4.1.0/examples/jdbi/
 - http://xvik.github.io/dropwizard-guicey/4.1.0/extras/jdbi/
+
