@@ -21,20 +21,6 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
     override fun initialize(bootstrap: Bootstrap<RestServiceConfiguration>) {
         super.initialize(bootstrap)
 
-
-
-        //JdbiBundle.forDbi { configuration, environment ->  }
-
-       // JdbiBundle.forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
-/*
-        val jdbiBundle=GuiceBundle.builder<RestServiceConfiguration>()
-        GuiceBundle.builder()
-                .bundles(JdbiBundle.<RestServiceConfiguration>forDatabase((conf, env) -> conf.getDatabase()))
-
-        forDbi<RestServiceConfiguration>((conf, env) -> locateDbi())
-*/
-
-
         val dbiProvider:ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration>{
             override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {
                 val jdbi = DBIFactory().build(environment, configuration.database, "database")

@@ -6,7 +6,6 @@ import com.example.demo.service.FooService
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Provider
-import javax.inject.Singleton
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam

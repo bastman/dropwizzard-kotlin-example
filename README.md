@@ -35,3 +35,16 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 - http://xvik.github.io/dropwizard-guicey/4.1.0/examples/jdbi/
 - http://xvik.github.io/dropwizard-guicey/4.1.0/extras/jdbi/
 
+    DAO / Repository
+
+    @JdbiRepository
+    @InTransaction
+    interface TweetRepository {
+        @GetGeneratedKeys
+        @SqlUpdate("INSERT INTO tweets (tweet_id, message, modifiedAt) VALUES (:tweetId, :message" +
+                ", UTC_TIMESTAMP(3))")
+        fun add(@BindBean tweet: Tweet): Int
+    }
+
+    from the docs: Note the use of @InTransaction: it was used to be able to call repository methods without extra annotations (the lowest transaction scope it's repository itself). It will make beans "feel the same" as usual DBI on demand sql object proxies.
+
