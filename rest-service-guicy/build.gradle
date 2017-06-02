@@ -1,4 +1,5 @@
 
+
 buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -11,7 +12,18 @@ buildscript {
     }
 }
 
+/*
+plugins {
+    id "io.spring.dependency-management" version "1.0.2.RELEASE"
+}
 
+dependencyManagement {
+    // Implicitly imports Dropwizard and Guice BOMs
+    imports {
+        mavenBom "ru.vyarus.guicey:guicey-bom:0.3.0"
+    }
+}
+*/
 
 apply plugin: 'kotlin'
 
@@ -46,12 +58,30 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr353:$jacksonVersion")
 
     // dropwizard
+
     compile group: 'io.dropwizard', name: 'dropwizard-client', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-auth', version: dropwizardVersion
+
     // dropwizard: guicey
     compile "ru.vyarus:dropwizard-guicey:$dropwizardGuiceyVersion"
-    // guice extensions
+    //compile "ru.vyarus:guicey-eventbus:$dropwizardGuiceyVersion"
+    compile 'ru.vyarus.guicey:guicey-jdbi:0.3.0'
 
+    // h2 db
+    compile 'com.h2database:h2:1.4.193'
+
+
+
+    /*
+    // guice extensions
+    compile 'ru.vyarus.guicey:dropwizard-guicey'
+    // For example, using dropwizard module (without version)
+    compile 'io.dropwizard:dropwizard-auth'
+    // Example of extension module usage
+    compile 'ru.vyarus.guicey:guicey-eventbus'
+    */
+    
     // tests
     testCompile("com.nhaarman:mockito-kotlin:$mockitoKotlinVersion")
     testCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
