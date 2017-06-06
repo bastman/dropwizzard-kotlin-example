@@ -10,7 +10,12 @@ import ru.vyarus.guicey.jdbi.tx.InTransaction
 @InTransaction
 interface TweetRepository {
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO tweets (tweet_id, message, modifiedAt) VALUES (:tweetId, :message" +
+
+    @SqlUpdate("INSERT INTO tweets (tweetId, message, modifiedAt) VALUES (:tweetId, :message" +
             ", UTC_TIMESTAMP(3))")
+            /*
+    @SqlUpdate("INSERT INTO tweets (tweetId, message, modifiedAt) VALUES (:tweetId, :message" +
+            ", :modifiedAt)")
+            */
     fun add(@BindBean tweet: Tweet): Int
 }

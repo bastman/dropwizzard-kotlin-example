@@ -1,8 +1,10 @@
 package com.example.demo
 
-import com.example.demo.api.resources.FooResource
-import com.example.demo.logging.AppLogger
 //import com.hubspot.dropwizard.guice.GuiceBundle
+
+
+import com.example.demo.jdbi.mapper.InstantAsSqlTimestampArgument
+import com.example.demo.logging.AppLogger
 import io.dropwizard.Application
 import io.dropwizard.Configuration
 import io.dropwizard.jdbi.DBIFactory
@@ -14,23 +16,23 @@ import ru.vyarus.dropwizard.guice.injector.lookup.InjectorLookup
 import ru.vyarus.guicey.jdbi.JdbiBundle
 import ru.vyarus.guicey.jdbi.dbi.ConfigAwareProvider
 
-
 class RestServiceApplication : Application<RestServiceConfiguration>() {
     private val LOGGER = AppLogger.get(this::class.java)
 
     override fun initialize(bootstrap: Bootstrap<RestServiceConfiguration>) {
         super.initialize(bootstrap)
 
-        val dbiProvider:ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration>{
+        val dbiProvider: ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration> {
             override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {
                 val jdbi = DBIFactory().build(environment, configuration.database, "database")
-               // jdbi.onDemand()
+                jdbi.registerArgumentFactory(InstantAsSqlTimestampArgument())
+                // jdbi.onDemand()
                 return jdbi
             }
         }
         val jdbiBundle = forDbi<RestServiceConfiguration>(dbiProvider)
 
-        val guiceBundle=GuiceBundle.builder<RestServiceConfiguration>()
+        val guiceBundle = GuiceBundle.builder<RestServiceConfiguration>()
                 .bundles(jdbiBundle)
 
                 // enable classpath scanning

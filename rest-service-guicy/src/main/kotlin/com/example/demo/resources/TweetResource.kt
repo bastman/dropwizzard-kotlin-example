@@ -28,7 +28,7 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
         LOGGER.info("/tweet/save $this")
 
         val tweet = Tweet(
-                tweetId = 1,
+                tweetId = 3,
                 message = "aaa",
                 modifiedAt = Instant.now()
         )
