@@ -19,6 +19,10 @@ import ru.vyarus.dropwizard.guice.GuiceBundle
 import ru.vyarus.dropwizard.guice.injector.lookup.InjectorLookup
 import ru.vyarus.guicey.jdbi.JdbiBundle
 import ru.vyarus.guicey.jdbi.dbi.ConfigAwareProvider
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
+import io.federecio.dropwizard.swagger.SwaggerBundle
+
+
 
 class RestServiceApplication : Application<RestServiceConfiguration>() {
     private val LOGGER = AppLogger.get(this::class.java)
@@ -27,6 +31,12 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
 
         // must be first, to be able to parse json/yml config files !!!!
         bootstrap.objectMapper.registerModule(KotlinModule())
+
+        bootstrap.addBundle(object : SwaggerBundle<RestServiceConfiguration>() {
+            override fun getSwaggerBundleConfiguration(configuration: RestServiceConfiguration): SwaggerBundleConfiguration {
+                return configuration.swaggerBundleConfiguration
+            }
+        })
 
 
         val dbiProvider: ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration> {
@@ -43,6 +53,7 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
             }
         }
         val jdbiBundle = forDbi<RestServiceConfiguration>(dbiProvider)
+
 
         val guiceBundle = GuiceBundle.builder<RestServiceConfiguration>()
                 .bundles(jdbiBundle)
@@ -75,6 +86,17 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
                 .build()
 
         bootstrap.addBundle(guiceBundle)
+
+
+
+        /*
+        bootstrap.addBundle(object : SwaggerBundle<RestServiceConfiguration>() {
+            override fun getSwaggerBundleConfiguration(sampleConfiguration: RestServiceConfiguration): SwaggerBundleConfiguration {
+                // this would be the preferred way to set up swagger, you can also construct the object here programtically if you want
+                return sampleConfiguration.swaggerBundleConfiguration
+            }
+        })
+        */
     }
 
     fun <C : Configuration> forDbi(dbi: ConfigAwareProvider<DBI, C>): JdbiBundle {

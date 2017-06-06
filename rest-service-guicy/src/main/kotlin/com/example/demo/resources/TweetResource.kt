@@ -5,6 +5,9 @@ import com.example.demo.domain.pizza.Psp
 import com.example.demo.jdbi.Tweet
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.TweetService
+
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,6 +20,7 @@ import javax.ws.rs.core.Response
 
 
 @Path("/tweet")
+@Api("/tweet")
 @Singleton
 class TweetResource @Inject constructor(val tweetService: TweetService){
 
@@ -25,6 +29,7 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/save")
+    @ApiOperation("save a tweet")
     fun save(): Response {
         LOGGER.info("/tweet/save $this")
 

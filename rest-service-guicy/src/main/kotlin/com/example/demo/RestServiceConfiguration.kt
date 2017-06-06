@@ -3,6 +3,8 @@ package com.example.demo
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.inject.Inject
 import io.dropwizard.db.DataSourceFactory
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
+
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
 import io.dropwizard.Configuration as DropwizardConfiguration
@@ -16,7 +18,9 @@ class RestServiceConfiguration(
         @Valid @NotNull @JsonProperty("configPaypal")
         val configPaypal: ConfigPaypal,
         @Valid @NotNull @JsonProperty("configGoogle")
-        val configGoogle: ConfigGoogle
+        val configGoogle: ConfigGoogle,
+        @JsonProperty("swagger")
+        val swaggerBundleConfiguration:SwaggerBundleConfiguration
 
 
 ) : io.dropwizard.Configuration() {

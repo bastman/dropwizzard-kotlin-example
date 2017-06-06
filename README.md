@@ -53,3 +53,9 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 ## jdbi kotlin plugins (requires jdbi3)
 - https://jdbi.github.io/#_kotlin
 - dropwizard jdbi: https://github.com/arteam/dropwizard-jdbi3
+
+
+## swagger:
+
+- https://github.com/smoketurner/dropwizard-swagger
+Open a browser and hit http://localhost:<your_port>/swagger
