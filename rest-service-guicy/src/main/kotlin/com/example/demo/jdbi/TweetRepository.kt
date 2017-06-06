@@ -1,8 +1,6 @@
 package com.example.demo.jdbi
 
-import org.skife.jdbi.v2.sqlobject.BindBean
-import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys
-import org.skife.jdbi.v2.sqlobject.SqlUpdate
+import org.skife.jdbi.v2.sqlobject.*
 import ru.vyarus.guicey.jdbi.installer.repository.JdbiRepository
 import ru.vyarus.guicey.jdbi.tx.InTransaction
 
@@ -18,4 +16,13 @@ interface TweetRepository {
             ", :modifiedAt)")
             */
     fun add(@BindBean tweet: Tweet): Int
+
+    @SqlUpdate("update tweets set message=:message, modifiedAt=:modifiedAt where tweetId=:tweetId")
+    fun update(@BindBean tweet: Tweet): Int
+
+    @SqlQuery("select * from tweets where tweetId = :tweetId")
+    fun findById(@Bind("tweetId") tweetId: Int): Tweet
+
+    @SqlQuery("select * from tweets")
+    fun findAll(): List<Tweet>
 }

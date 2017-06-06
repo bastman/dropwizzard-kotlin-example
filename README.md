@@ -48,3 +48,8 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 
     from the docs: Note the use of @InTransaction: it was used to be able to call repository methods without extra annotations (the lowest transaction scope it's repository itself). It will make beans "feel the same" as usual DBI on demand sql object proxies.
 
+- https://github.com/bfkelsey/dropwizard-kotlin-api-example/blob/master/src/main/kotlin/com/bfkelsey/api/jdbi/ProviderDAO.kt
+
+## jdbi kotlin plugins (requires jdbi3)
+- https://jdbi.github.io/#_kotlin
+- dropwizard jdbi: https://github.com/arteam/dropwizard-jdbi3

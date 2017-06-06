@@ -10,6 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import javax.ws.rs.GET
 import javax.ws.rs.Path
+import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
@@ -34,6 +35,34 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
         )
         tweetService.save(tweet)
 
-        return Response.ok(tweet).build()
+        return Response.ok(TweetResponse(tweet=tweet)).build()
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/{id}")
+    fun getById(
+            @PathParam("id") id: Int
+    ): Response {
+        LOGGER.info("/tweet/$id $this")
+
+        val tweet=tweetService.findById(id)
+
+        return Response.ok(TweetResponse(tweet=tweet)).build()
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/list")
+    fun findAll(): Response {
+        LOGGER.info("/tweet/list $this")
+
+
+        val tweets= tweetService.findAll()
+
+        return Response.ok(TweetCollectionResponse(tweets=tweets)).build()
     }
 }
+
+data class TweetCollectionResponse(val tweets:List<Tweet>)
+data class TweetResponse(val tweet:Tweet?)

@@ -1,10 +1,21 @@
 package com.example.demo.domain.pizza.paypal
 
+import com.example.demo.ConfigPaypal
+import com.example.demo.RestServiceConfiguration
 import com.example.demo.domain.pizza.*
 import com.example.demo.logging.AppLogger
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
+
+
+@Singleton
+class PaypalClient(private val paypal: ConfigPaypal)  {
+
+    @Inject constructor(config: RestServiceConfiguration): this(paypal = config.configPaypal)
+
+    fun getApiKey():String = paypal.apiKey
+}
 
 @Singleton
 class PayPalCreditCardProcessor:CreditCardProcessor {
@@ -15,6 +26,7 @@ class PayPalCreditCardProcessor:CreditCardProcessor {
 }
 @Singleton
 class PaypalService @Inject constructor(
+        val client:PaypalClient,
         override val processor: PayPalCreditCardProcessor,
         override val transactionLog: TransactionLog
 ):BillingService {

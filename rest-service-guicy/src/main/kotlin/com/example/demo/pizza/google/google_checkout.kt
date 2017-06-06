@@ -1,11 +1,21 @@
 package com.example.demo.domain.pizza.google
 
+import com.example.demo.ConfigGoogle
+import com.example.demo.ConfigPaypal
+import com.example.demo.RestServiceConfiguration
 import com.example.demo.domain.pizza.*
 import com.example.demo.logging.AppLogger
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Singleton
+class GoogleCheckoutClient(private val googleConfig: ConfigGoogle)  {
+
+    @com.google.inject.Inject constructor(config: RestServiceConfiguration): this(googleConfig = config.configGoogle)
+
+    fun getApiKey():String = googleConfig.apiKey
+}
 @Singleton
 class GoogleCheckoutProcessor: CreditCardProcessor {
     private val LOGGER = AppLogger.get(this::class.java)
