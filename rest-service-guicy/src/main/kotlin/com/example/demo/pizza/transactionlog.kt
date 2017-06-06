@@ -17,14 +17,14 @@ enum class TransactionStatus() {
 }
 
 data class Transaction(
-        val psp:Psp,
+        val psp: Psp,
         val status: TransactionStatus,
-        val amount:Int,
+        val amount: Int,
         val modifiedAt: Instant
 )
 
 @Singleton
-class DatabaseTransactionLog():TransactionLog {
+class DatabaseTransactionLog() : TransactionLog {
     private val LOGGER = AppLogger.get(this::class.java)
     override fun save(transaction: Transaction) {
         LOGGER.info("save() transaction=$transaction")

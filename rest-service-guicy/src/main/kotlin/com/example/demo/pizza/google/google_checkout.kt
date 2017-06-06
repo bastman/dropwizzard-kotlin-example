@@ -1,7 +1,6 @@
 package com.example.demo.domain.pizza.google
 
 import com.example.demo.ConfigGoogle
-import com.example.demo.ConfigPaypal
 import com.example.demo.RestServiceConfiguration
 import com.example.demo.domain.pizza.*
 import com.example.demo.logging.AppLogger
@@ -10,34 +9,35 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GoogleCheckoutClient(private val googleConfig: ConfigGoogle)  {
+class GoogleCheckoutClient(private val googleConfig: ConfigGoogle) {
 
-    @com.google.inject.Inject constructor(config: RestServiceConfiguration): this(googleConfig = config.configGoogle)
+    @com.google.inject.Inject constructor(config: RestServiceConfiguration) : this(googleConfig = config.configGoogle)
 
-    fun getApiKey():String = googleConfig.apiKey
+    fun getApiKey(): String = googleConfig.apiKey
 }
+
 @Singleton
-class GoogleCheckoutProcessor: CreditCardProcessor {
+class GoogleCheckoutProcessor : CreditCardProcessor {
     private val LOGGER = AppLogger.get(this::class.java)
-    fun pay(amount:Int) {
+    fun pay(amount: Int) {
         LOGGER.info("pay() amount=$amount")
     }
 }
 
 @Singleton
-class GoogleCheckoutService@Inject constructor(
+class GoogleCheckoutService @Inject constructor(
         override val processor: GoogleCheckoutProcessor,
         override val transactionLog: TransactionLog
-):BillingService{
+) : BillingService {
     private val LOGGER = AppLogger.get(this::class.java)
-    override val psp:Psp = Psp.GoogleCheckout
+    override val psp: Psp = Psp.GoogleCheckout
 
-    fun pay(amount:Int):Transaction {
+    fun pay(amount: Int): Transaction {
         LOGGER.info("pay() amount=$amount")
 
         processor.pay(amount)
 
-        val transaction=Transaction(
+        val transaction = Transaction(
                 psp = psp,
                 status = TransactionStatus.PAID,
                 amount = amount,

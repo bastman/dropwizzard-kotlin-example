@@ -1,8 +1,6 @@
 package com.example.demo
 
-import com.example.demo.jdbi.TweetRepository
 import com.example.demo.logging.AppLogger
-import com.google.inject.Provides
 import ru.vyarus.dropwizard.guice.module.support.DropwizardAwareModule
 
 class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
@@ -40,8 +38,6 @@ class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
         //bind(PaypalClient::class.java).to(PaypalClient(config = configuration.configPaypal))
 
     }
-
-
 
 
 }

@@ -10,35 +10,36 @@ import javax.inject.Singleton
 
 
 @Singleton
-class PaypalClient(private val paypal: ConfigPaypal)  {
+class PaypalClient(private val paypal: ConfigPaypal) {
 
-    @Inject constructor(config: RestServiceConfiguration): this(paypal = config.configPaypal)
+    @Inject constructor(config: RestServiceConfiguration) : this(paypal = config.configPaypal)
 
-    fun getApiKey():String = paypal.apiKey
+    fun getApiKey(): String = paypal.apiKey
 }
 
 @Singleton
-class PayPalCreditCardProcessor:CreditCardProcessor {
+class PayPalCreditCardProcessor : CreditCardProcessor {
     private val LOGGER = AppLogger.get(this::class.java)
-    fun pay(amount:Int) {
+    fun pay(amount: Int) {
         LOGGER.info("pay() amount=$amount")
     }
 }
+
 @Singleton
 class PaypalService @Inject constructor(
-        val client:PaypalClient,
+        val client: PaypalClient,
         override val processor: PayPalCreditCardProcessor,
         override val transactionLog: TransactionLog
-):BillingService {
+) : BillingService {
     private val LOGGER = AppLogger.get(this::class.java)
     override val psp: Psp = Psp.Paypal
 
-    fun pay(amount:Int):Transaction {
+    fun pay(amount: Int): Transaction {
         LOGGER.info("pay() amount=$amount")
 
         processor.pay(amount)
 
-        val transaction= Transaction(
+        val transaction = Transaction(
                 psp = psp,
                 status = TransactionStatus.PAID,
                 amount = amount,
