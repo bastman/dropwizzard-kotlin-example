@@ -3,6 +3,7 @@ package com.example.demo.api.resources
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.BarService
 import com.example.demo.service.FooService
+import io.swagger.annotations.Api
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Provider
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 @Path("/api")
+@Api("/api")
 class FooResource @Inject constructor(
         private val fooService: FooService,
         private val barService: BarService

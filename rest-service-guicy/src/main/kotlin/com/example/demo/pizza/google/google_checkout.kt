@@ -3,6 +3,7 @@ package com.example.demo.domain.pizza.google
 import com.example.demo.ConfigGoogle
 import com.example.demo.RestServiceConfiguration
 import com.example.demo.domain.pizza.*
+import com.example.demo.domain.pizza.paypal.PaypalClient
 import com.example.demo.logging.AppLogger
 import java.time.Instant
 import javax.inject.Inject
@@ -26,6 +27,7 @@ class GoogleCheckoutProcessor : CreditCardProcessor {
 
 @Singleton
 class GoogleCheckoutService @Inject constructor(
+        val client: GoogleCheckoutClient,
         override val processor: GoogleCheckoutProcessor,
         override val transactionLog: TransactionLog
 ) : BillingService {
