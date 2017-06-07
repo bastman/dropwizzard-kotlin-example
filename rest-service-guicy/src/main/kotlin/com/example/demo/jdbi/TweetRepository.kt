@@ -1,21 +1,28 @@
 package com.example.demo.jdbi
 
+import org.skife.jdbi.v2.StatementContext
 import org.skife.jdbi.v2.sqlobject.*
+import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper
+import org.skife.jdbi.v2.tweak.ResultSetMapper
 import ru.vyarus.guicey.jdbi.installer.repository.JdbiRepository
 import ru.vyarus.guicey.jdbi.tx.InTransaction
+import java.sql.ResultSet
+import java.time.Instant
+
 
 @JdbiRepository
 @InTransaction
+@RegisterMapper(TweetMapper::class)
 interface TweetRepository {
     @GetGeneratedKeys
 
-    @SqlUpdate("INSERT INTO tweets (tweetId, message, modifiedAt) VALUES (:tweetId, :message" +
+    @SqlUpdate("INSERT INTO tweets (tweetId, message, modified_at) VALUES (null, :message" +
             ", UTC_TIMESTAMP(3))")
             /*
     @SqlUpdate("INSERT INTO tweets (tweetId, message, modifiedAt) VALUES (:tweetId, :message" +
             ", :modifiedAt)")
             */
-    fun add(@BindBean tweet: Tweet): Int
+    fun add(@BindBean tweet: TweetAddRequest): Int
 
     @SqlUpdate("update tweets set message=:message, modifiedAt=:modifiedAt where tweetId=:tweetId")
     fun update(@BindBean tweet: Tweet): Int
@@ -25,4 +32,13 @@ interface TweetRepository {
 
     @SqlQuery("select * from tweets")
     fun findAll(): List<Tweet>
+}
+
+data class TweetAddRequest(val modifiedAt: Instant, val message: String)
+
+class TweetMapper : ResultSetMapper<Tweet> {
+
+    override fun map(index: Int, r: ResultSet, ctx: StatementContext?): Tweet {
+        return Tweet(tweetId = r.getInt("tweetId"), message = r.getString("message"), modifiedAt = r.getTimestamp("modified_at").toInstant())
+    }
 }

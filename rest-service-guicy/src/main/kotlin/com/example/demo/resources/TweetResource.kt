@@ -1,17 +1,16 @@
 package com.example.demo.resources
 
 import com.example.demo.jdbi.Tweet
+import com.example.demo.jdbi.TweetAddRequest
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.TweetService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import ru.vyarus.guicey.jdbi.tx.InTransaction
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
+import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -24,22 +23,29 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     private val LOGGER = AppLogger.get(this::class.java)
 
     @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    @Path("/save")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
+    @Path("/add")
     @ApiOperation(
-            value = "save a tweet",
+            value = "add a tweet",
             notes = "",
             response = TweetResponse::class
     )
-    fun save(): Response {
-        LOGGER.info("/tweet/save $this")
+    @InTransaction
+    fun save(
+            //tw:Tweet
+            req: TweetCreateRequest
+    ): Response {
 
-        val tweet = Tweet(
-                tweetId = 3,
-                message = "aaa",
-                modifiedAt = Instant.now()
+        LOGGER.info("/tweet/add $this request=$req")
+
+        val tweetId = tweetService.add(
+                TweetAddRequest(
+                        message = req.message,
+                        modifiedAt = Instant.now()
+                )
         )
-        tweetService.save(tweet)
+        val tweet = tweetService.findById(id = tweetId)
 
         return Response.ok(TweetResponse(tweet=tweet)).build()
     }
@@ -81,3 +87,4 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
 
 data class TweetCollectionResponse(val tweets:List<Tweet>)
 data class TweetResponse(val tweet:Tweet?)
+data class TweetCreateRequest(val message: String)

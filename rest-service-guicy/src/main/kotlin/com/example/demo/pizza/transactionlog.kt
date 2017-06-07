@@ -27,6 +27,6 @@ data class Transaction(
 class DatabaseTransactionLog() : TransactionLog {
     private val LOGGER = AppLogger.get(this::class.java)
     override fun save(transaction: Transaction) {
-        LOGGER.info("save() transaction=$transaction")
+        LOGGER.info("add() transaction=$transaction")
     }
 }
