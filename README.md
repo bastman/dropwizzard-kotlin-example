@@ -1,5 +1,5 @@
-# dropwizzard-kotlin-example
-playing around with dropwizzard
+# dropwizard-kotlin-example
+playing around with dropwizard
 
 ## status
 - experimental
@@ -11,8 +11,8 @@ playing around with dropwizzard
 
 ## Dropwizard Resource (api endpoints)
 
-- do not use @singleton (in spring-boot we use singleton), since you may want to inject HttpRequest
-- 
+- if you need access to HttpRequest, do not use @singleton in resource class
+  (in spring-boot we preferable use singleton, HttpRequest is injected into method signature) 
 
 ## HK & Guice
 - To access HK bindings we need HK2 ServiceLocator: it's instance is registered by GuiceFeature (in time of HK context startup).
@@ -58,4 +58,9 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 ## swagger:
 
 - https://github.com/smoketurner/dropwizard-swagger
-Open a browser and hit http://localhost:<your_port>/swagger
+Open a browser and hit http://localhost:8080/swagger
+
+## mysql (docker)
+
+- run: $ docker-compose -f docker/db/docker-compose.yml up --build
+
