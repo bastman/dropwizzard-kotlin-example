@@ -24,3 +24,6 @@ server:
 
 swagger:
   resourcePackage: com.example.demo
+
+seb:
+  test: sebtest

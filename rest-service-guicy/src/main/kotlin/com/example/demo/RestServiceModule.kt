@@ -1,7 +1,9 @@
 package com.example.demo
 
 import com.example.demo.logging.AppLogger
+import com.google.inject.Provides
 import ru.vyarus.dropwizard.guice.module.support.DropwizardAwareModule
+import javax.inject.Singleton
 
 class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
     private val LOGGER = AppLogger.get(this::class.java)
@@ -39,6 +41,11 @@ class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
 
     }
 
+    @Provides @Singleton
+    fun provideSebTestConf(configuration: RestServiceConfiguration): SebTestConf = configuration.sebTestConf
+
+    @Provides @Singleton
+    fun providePaypalConf(configuration: RestServiceConfiguration): ConfigPaypal = configuration.configPaypal
 
 }
 

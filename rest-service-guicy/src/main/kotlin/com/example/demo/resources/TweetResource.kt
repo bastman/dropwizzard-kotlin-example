@@ -54,7 +54,7 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @GET
     @Path("/{id}")
     @ApiOperation(
-            value = "get tweet by id",
+            value = "provideSebTestConf tweet by id",
             notes = "",
             response = TweetResponse::class
     )
@@ -72,7 +72,7 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @GET
     @Path("/list")
     @ApiOperation(
-            value = "get all tweets",
+            value = "provideSebTestConf all tweets",
             notes = "",
             response = TweetCollectionResponse::class
     )

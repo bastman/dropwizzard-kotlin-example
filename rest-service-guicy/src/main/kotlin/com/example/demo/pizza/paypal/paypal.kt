@@ -1,7 +1,6 @@
 package com.example.demo.domain.pizza.paypal
 
 import com.example.demo.ConfigPaypal
-import com.example.demo.RestServiceConfiguration
 import com.example.demo.domain.pizza.*
 import com.example.demo.logging.AppLogger
 import java.time.Instant
@@ -10,9 +9,9 @@ import javax.inject.Singleton
 
 
 @Singleton
-class PaypalClient(private val paypal: ConfigPaypal) {
+class PaypalClient @Inject constructor(private val paypal: ConfigPaypal) {
 
-    @Inject constructor(config: RestServiceConfiguration) : this(paypal = config.configPaypal)
+    //  @Inject constructor(config: RestServiceConfiguration) : this(paypal = config.configPaypal)
 
     fun getApiKey(): String = paypal.apiKey
 }

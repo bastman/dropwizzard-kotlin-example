@@ -1,5 +1,8 @@
 package com.example.demo.api.resources
 
+import com.example.demo.ConfigService
+import com.example.demo.SebTestConf
+import com.example.demo.domain.pizza.paypal.PaypalClient
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.BarService
 import com.example.demo.service.FooService
@@ -21,7 +24,10 @@ import javax.ws.rs.core.Response
 @Api("/api")
 class FooResource @Inject constructor(
         private val fooService: FooService,
-        private val barService: BarService
+        private val barService: BarService,
+        private val sebtest: SebTestConf,
+        private val configService: ConfigService,
+        private val paypalClient: PaypalClient
 ) {
     private val LOGGER = AppLogger.get(this::class.java)
 
@@ -32,11 +38,12 @@ class FooResource @Inject constructor(
     @GET
     @Path("/foo")
     @ApiOperation(
-            value = "get foo",
+            value = "provideSebTestConf foo",
             notes = "",
             response = String::class
     )
     fun foo(): Response {
+        val f = configService.seb
         LOGGER.info("/foo $this")
         return Response.ok("/foo: ${fooService.foo()}").build()
     }
@@ -46,7 +53,7 @@ class FooResource @Inject constructor(
     @GET
     @Path("/bar")
     @ApiOperation(
-            value = "get bar",
+            value = "provideSebTestConf bar",
             notes = "",
             response = String::class
     )
@@ -61,7 +68,7 @@ class FooResource @Inject constructor(
     @GET
     @Path("/data/{id}")
     @ApiOperation(
-            value = "get data by id",
+            value = "provideSebTestConf data by id",
             notes = "",
             response = GetDataResponse::class
     )
