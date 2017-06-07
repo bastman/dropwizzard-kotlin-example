@@ -1,11 +1,8 @@
 package com.example.demo.resources
 
-import com.example.demo.api.resources.PspProvidersResponse
-import com.example.demo.domain.pizza.Psp
 import com.example.demo.jdbi.Tweet
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.TweetService
-
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import java.time.Instant
@@ -29,7 +26,11 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/save")
-    @ApiOperation("save a tweet")
+    @ApiOperation(
+            value = "save a tweet",
+            notes = "",
+            response = TweetResponse::class
+    )
     fun save(): Response {
         LOGGER.info("/tweet/save $this")
 
@@ -46,6 +47,11 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/{id}")
+    @ApiOperation(
+            value = "get tweet by id",
+            notes = "",
+            response = TweetResponse::class
+    )
     fun getById(
             @PathParam("id") id: Int
     ): Response {
@@ -59,9 +65,13 @@ class TweetResource @Inject constructor(val tweetService: TweetService){
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/list")
+    @ApiOperation(
+            value = "get all tweets",
+            notes = "",
+            response = TweetCollectionResponse::class
+    )
     fun findAll(): Response {
         LOGGER.info("/tweet/list $this")
-
 
         val tweets= tweetService.findAll()
 

@@ -8,7 +8,7 @@ CREATE TABLE example.tweet (
 );
 
 CREATE TABLE tweets (
-    id       INT            NOT NULL     AUTO_INCREMENT,
+    tweetId       INT            NOT NULL     AUTO_INCREMENT,
     message   VARCHAR(255) NOT NULL,
     modified_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
