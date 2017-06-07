@@ -6,6 +6,7 @@ import com.example.demo.domain.pizza.google.GoogleCheckoutService
 import com.example.demo.domain.pizza.paypal.PaypalService
 import com.example.demo.logging.AppLogger
 import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.ws.rs.GET
@@ -28,6 +29,12 @@ class PizzaResource @Inject constructor(
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/psp/providers")
+    //@ApiResponse(code = 200, message = "OK", response = PspProvidersResponse::class)
+    @ApiOperation(
+            value = "list psp",
+            notes = "list payment providers available",
+            response = PspProvidersResponse::class
+    )
     fun listPspProviders(): Response {
         LOGGER.info("/psp/providers $this")
         val payload = PspProvidersResponse(
@@ -51,6 +58,11 @@ class PizzaResource @Inject constructor(
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/psp/{id}/pay/{amount}")
+    @ApiOperation(
+            value = "pay",
+            notes = "pay with a payment provider",
+            response = PspPayResponse::class
+    )
     fun pay(
             @PathParam("id") id: String,
             @PathParam("amount") amount: Int
@@ -81,6 +93,7 @@ class PizzaResource @Inject constructor(
         return Response.ok(payload).build()
     }
 }
+
 
 data class PspProvidersResponse(
         val providers:List<Psp>
