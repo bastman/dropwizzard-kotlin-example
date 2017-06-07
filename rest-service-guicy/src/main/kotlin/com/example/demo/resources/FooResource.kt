@@ -4,18 +4,17 @@ import com.example.demo.logging.AppLogger
 import com.example.demo.service.BarService
 import com.example.demo.service.FooService
 import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.servlet.http.HttpServletRequest
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import javax.servlet.http.HttpServletRequest
-
-
 
 
 @Path("/api")
@@ -32,6 +31,11 @@ class FooResource @Inject constructor(
     @Produces(MediaType.TEXT_PLAIN)
     @GET
     @Path("/foo")
+    @ApiOperation(
+            value = "get foo",
+            notes = "",
+            response = String::class
+    )
     fun foo(): Response {
         LOGGER.info("/foo $this")
         return Response.ok("/foo: ${fooService.foo()}").build()
@@ -41,6 +45,11 @@ class FooResource @Inject constructor(
     @Produces(MediaType.TEXT_PLAIN)
     @GET
     @Path("/bar")
+    @ApiOperation(
+            value = "get bar",
+            notes = "",
+            response = String::class
+    )
     fun bar(): Response {
         val servletRequest = requestProvider.get()
         val ip = servletRequest.getRemoteAddr();
@@ -51,6 +60,11 @@ class FooResource @Inject constructor(
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     @Path("/data/{id}")
+    @ApiOperation(
+            value = "get data by id",
+            notes = "",
+            response = GetDataResponse::class
+    )
     fun getData(@PathParam("id") id: String): Response {
         LOGGER.info("/data/$id $this")
         val data = GetDataResponse(
