@@ -66,3 +66,7 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 - https://github.com/federecio/dropwizard-swagger-sample-app
 Open a browser and hit http://localhost:8080/swagger
 
+
+## exception handling
+- https://nbsoftsolutions.com/blog/writing-a-dropwizard-json-app
+
