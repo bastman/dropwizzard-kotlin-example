@@ -32,12 +32,12 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
         // must be first, to be able to parse json/yml config files !!!!
         bootstrap.objectMapper.registerModule(KotlinModule())
 
+
         bootstrap.addBundle(object : SwaggerBundle<RestServiceConfiguration>() {
             override fun getSwaggerBundleConfiguration(configuration: RestServiceConfiguration): SwaggerBundleConfiguration {
                 return configuration.swaggerBundleConfiguration
             }
         })
-
 
         val dbiProvider: ConfigAwareProvider<DBI, RestServiceConfiguration> = object : ConfigAwareProvider<DBI, RestServiceConfiguration> {
             override fun get(configuration: RestServiceConfiguration, environment: Environment): DBI {

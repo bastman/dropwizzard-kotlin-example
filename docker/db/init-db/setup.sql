@@ -7,6 +7,12 @@ CREATE TABLE example.tweet (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE tweets (
+    id       INT            NOT NULL     AUTO_INCREMENT,
+    message   VARCHAR(255) NOT NULL,
+    modified_at TIMESTAMP NOT NULL,
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE `foo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

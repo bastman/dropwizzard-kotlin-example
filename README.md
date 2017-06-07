@@ -5,6 +5,11 @@ playing around with dropwizard
 - experimental
 - in progress ...
 
+## run guicey app
+
+- mysql (docker): $ docker-compose -f docker/db/docker-compose.yml up --build
+- Program Arguments: server rest-service-guicy/src/main/resources/example-config.yml
+
 # findings
 
 - use dropwizard-guicey! (is inspired by hubspot dropwizard-guice) seems to be to best integratio with guice
@@ -59,8 +64,4 @@ InjectorLookup.getInjector(RULE.getApplication()).getBean(MyService.class);
 
 - https://github.com/smoketurner/dropwizard-swagger
 Open a browser and hit http://localhost:8080/swagger
-
-## mysql (docker)
-
-- run: $ docker-compose -f docker/db/docker-compose.yml up --build
 
