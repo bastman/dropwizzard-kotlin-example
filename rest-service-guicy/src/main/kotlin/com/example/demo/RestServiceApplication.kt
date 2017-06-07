@@ -5,23 +5,23 @@ package com.example.demo
 
 import com.example.demo.jdbi.mapper.InstantAsSqlTimestampArgument
 import com.example.demo.logging.AppLogger
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import io.dropwizard.Application
 import io.dropwizard.Configuration
 import io.dropwizard.jdbi.DBIFactory
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
-import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.core.kotlin.KotlinPlugin
-import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
+import io.federecio.dropwizard.swagger.SwaggerBundle
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
 import org.skife.jdbi.v2.DBI
 import ru.vyarus.dropwizard.guice.GuiceBundle
 import ru.vyarus.dropwizard.guice.injector.lookup.InjectorLookup
 import ru.vyarus.guicey.jdbi.JdbiBundle
 import ru.vyarus.guicey.jdbi.dbi.ConfigAwareProvider
-import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
-import io.federecio.dropwizard.swagger.SwaggerBundle
-
 
 
 class RestServiceApplication : Application<RestServiceConfiguration>() {
@@ -30,7 +30,18 @@ class RestServiceApplication : Application<RestServiceConfiguration>() {
         super.initialize(bootstrap)
 
         // must be first, to be able to parse json/yml config files !!!!
-        bootstrap.objectMapper.registerModule(KotlinModule())
+        bootstrap.objectMapper
+                .registerModules(
+                        KotlinModule(),
+                        JavaTimeModule(),
+                        Jdk8Module(),
+                        ParameterNamesModule()
+                )
+                .disable(
+                        SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
+                        SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS
+                )
+
 
 
         bootstrap.addBundle(object : SwaggerBundle<RestServiceConfiguration>() {
