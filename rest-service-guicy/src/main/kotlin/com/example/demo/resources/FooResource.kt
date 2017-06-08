@@ -1,8 +1,5 @@
 package com.example.demo.api.resources
 
-import com.example.demo.ConfigService
-import com.example.demo.SebTestConf
-import com.example.demo.domain.pizza.paypal.PaypalClient
 import com.example.demo.logging.AppLogger
 import com.example.demo.service.BarService
 import com.example.demo.service.FooService
@@ -24,10 +21,7 @@ import javax.ws.rs.core.Response
 @Api("/api")
 class FooResource @Inject constructor(
         private val fooService: FooService,
-        private val barService: BarService,
-        private val sebtest: SebTestConf,
-        private val configService: ConfigService,
-        private val paypalClient: PaypalClient
+        private val barService: BarService
 ) {
     private val LOGGER = AppLogger.get(this::class.java)
 
@@ -43,7 +37,6 @@ class FooResource @Inject constructor(
             response = String::class
     )
     fun foo(): Response {
-        val f = configService.seb
         LOGGER.info("/foo $this")
         return Response.ok("/foo: ${fooService.foo()}").build()
     }
