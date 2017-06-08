@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull
 import io.dropwizard.Configuration as DropwizardConfiguration
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class RestServiceConfiguration(
+data class RestServiceConfiguration @Inject constructor(
         @Valid @NotNull @JsonProperty("database")
         val database: DataSourceFactory,// = DataSourceFactory(),
 

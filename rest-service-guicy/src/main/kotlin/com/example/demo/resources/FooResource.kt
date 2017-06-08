@@ -7,8 +7,6 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import java.time.Instant
 import javax.inject.Inject
-import javax.inject.Provider
-import javax.servlet.http.HttpServletRequest
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
@@ -25,8 +23,8 @@ class FooResource @Inject constructor(
 ) {
     private val LOGGER = AppLogger.get(this::class.java)
 
-    @Inject
-    private lateinit var requestProvider: Provider<HttpServletRequest>
+    //@Inject
+    //private lateinit var requestProvider: Provider<HttpServletRequest>
 
     @Produces(MediaType.TEXT_PLAIN)
     @GET
@@ -51,10 +49,10 @@ class FooResource @Inject constructor(
             response = String::class
     )
     fun bar(): Response {
-        val servletRequest = requestProvider.get()
-        val ip = servletRequest.getRemoteAddr();
-        LOGGER.info("/bar $this: your ip: $ip")
-        return Response.ok("/bar: ${barService.bar()} - your ip: $ip").build()
+        // val servletRequest = requestProvider.get()
+        // val ip = servletRequest.getRemoteAddr();
+        // LOGGER.info("/bar $this: your ip: $ip")
+        return Response.ok("/bar: ${barService.bar()}").build()
     }
 
     @Produces(MediaType.APPLICATION_JSON)
