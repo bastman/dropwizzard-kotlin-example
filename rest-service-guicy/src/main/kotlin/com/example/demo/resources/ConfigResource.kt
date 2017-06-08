@@ -1,6 +1,7 @@
 package com.example.demo.resources
 
 import com.example.demo.ConfigExample
+import com.example.demo.ConfigGoogle
 import com.example.demo.ConfigPaypal
 import com.example.demo.ConfigService
 import com.example.demo.domain.pizza.paypal.PaypalClient
@@ -20,7 +21,8 @@ class ConfigResource @Inject constructor(
         private val configService: ConfigService,
         private val configExample: ConfigExample,
         private val configPaypal: ConfigPaypal,
-        private val paypalClient: PaypalClient
+        private val paypalClient: PaypalClient,
+        private val configGoogle: ConfigGoogle
 ) {
 
     private val LOGGER = AppLogger.get(this::class.java)
@@ -39,9 +41,11 @@ class ConfigResource @Inject constructor(
         val responseData = mapOf<String, Any?>(
                 "configExample" to configExample,
                 "configPaypal" to configPaypal,
+                "configGoogle" to configGoogle,
                 "paypalClient.apiKey" to paypalClient.getApiKey(),
                 "configService.configPaypal" to configService.configPaypal,
-                "configService.configGoogle" to configService.configGoogle
+                "configService.configGoogle" to configService.configGoogle,
+                "configService.providerConfigGoogle" to configService.provideConfigGoogle()
         )
 
         return Response.ok(responseData).build()

@@ -10,4 +10,8 @@ class ConfigService @Inject constructor(
     val configExample = configuration.configExample
     val configGoogle = configuration.configGoogle
     val configPaypal = configuration.configPaypal
+    //@Provides //does not work
+    fun provideConfigGoogle(): ConfigGoogle {
+        return configGoogle
+    }
 }

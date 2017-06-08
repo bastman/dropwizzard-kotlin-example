@@ -5,8 +5,7 @@ import com.example.demo.service.BarService
 import com.google.inject.Guice
 import com.google.inject.Provides
 import com.google.inject.util.Modules
-import org.amshove.kluent.`should be instance of`
-import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
 import ru.vyarus.dropwizard.guice.module.support.DropwizardAwareModule
@@ -16,13 +15,35 @@ import javax.ws.rs.core.Response
 
 internal class ConfigResourceTest {
 
+
+    var configServiceStub: ConfigService = {
+        val stub = mock(ConfigService::class)
+        When calling stub.provideConfigGoogle() itReturns ConfigGoogle(apiKey = "google-api-key-stubbed-provideConfigGoogle")
+        When calling stub.configGoogle itReturns ConfigGoogle(apiKey = "google-api-key-stubbed-configGoogle")
+
+        stub
+    }.invoke()
+
+
     // a test module, that binds BarService (Interface) to a MockImplementation
-    internal class TestModule : DropwizardAwareModule<RestServiceConfiguration>() {
+    internal class TestModule(val configServiceStub: ConfigService) : DropwizardAwareModule<RestServiceConfiguration>() {
         override fun configure() {
-            //bind(BarServiceMockImpl::class.java) // register
+
             bind(BarService::class.java)
                     .to(BarServiceMockImpl::class.java)
                     .asEagerSingleton() // bind to interface
+
+            // does not work :(
+            //When calling configServiceStub.provideConfigGoogle() itReturns ConfigGoogle(apiKey = "google-api-key-stubbed")
+
+            // bind(ConfigService::class.java).to(configServiceStub)
+            //  When calling configServiceStub.provideConfigGoogle() itReturns ConfigGoogle(apiKey = "google-api-key-stubbed")
+
+        }
+
+        @Provides @Singleton
+        fun provideConfigService(): ConfigService {
+            return configServiceStub
         }
 
         @Provides @Singleton
@@ -34,15 +55,20 @@ internal class ConfigResourceTest {
         fun provideConfigPaypal(): ConfigPaypal {
             return ConfigPaypal(apiKey = "paypal-apikey-mocked")
         }
+
+        @Provides @Singleton
+        fun provideConfigGoogle(): ConfigGoogle {
+            return ConfigGoogle(apiKey = "google-apikey-mocked")
+        }
     }
 
-    private val injector = Guice.createInjector(
+    val injector = Guice.createInjector(
             // the default module
             Modules.override(RestServiceModule())
                     // will be modified by TestModule
-                    .with(TestModule())
+                    .with(TestModule(configServiceStub))
     )
-    private val apiResource: ConfigResource = injector.getInstance(
+    val apiResource: ConfigResource = injector.getInstance(
             ConfigResource::class.java
     )
 
@@ -57,6 +83,14 @@ internal class ConfigResourceTest {
 
     @Test
     fun `api describe should return something useful`() {
+        // Verify that a method with any parameter was called
+        val mock = mock(ConfigService::class)
+        When calling mock.provideConfigGoogle() itReturns ConfigGoogle(apiKey = "google-api-key-stubbed")
+
+        val confGoogle = mock.provideConfigGoogle()
+        Verify on mock that mock.provideConfigGoogle() was called
+
+
         val response: Response = apiResource.foo()
 
         response.entity `should be instance of` Map::class
