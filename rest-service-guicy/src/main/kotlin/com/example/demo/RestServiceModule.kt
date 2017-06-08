@@ -42,10 +42,10 @@ class RestServiceModule : DropwizardAwareModule<RestServiceConfiguration>() {
     }
 
     @Provides @Singleton
-    fun provideSebTestConf(configuration: RestServiceConfiguration): SebTestConf = configuration.sebTestConf
+    fun provideConfigExample(configuration: RestServiceConfiguration): SebTestConf = configuration.configExample
 
     @Provides @Singleton
-    fun providePaypalConf(configuration: RestServiceConfiguration): ConfigPaypal = configuration.configPaypal
+    fun provideConfigPaypal(configuration: RestServiceConfiguration): ConfigPaypal = configuration.configPaypal
 
 }
 

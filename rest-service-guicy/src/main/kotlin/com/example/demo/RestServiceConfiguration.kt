@@ -22,8 +22,8 @@ data class RestServiceConfiguration(
         val configGoogle: ConfigGoogle,
         @JsonProperty("swagger")
         val swaggerBundleConfiguration: SwaggerBundleConfiguration,
-        @JsonProperty("seb") @Valid
-        val sebTestConf: SebTestConf
+        @JsonProperty("example") @Valid
+        val configExample: SebTestConf
 ) : io.dropwizard.Configuration() {
 
 }

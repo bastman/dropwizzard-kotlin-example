@@ -25,5 +25,5 @@ server:
 swagger:
   resourcePackage: com.example.demo
 
-seb:
-  test: sebtest
+example:
+  test: example-test

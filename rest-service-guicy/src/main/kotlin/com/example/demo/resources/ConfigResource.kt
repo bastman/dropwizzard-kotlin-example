@@ -1,5 +1,6 @@
 package com.example.demo.resources
 
+import com.example.demo.ConfigPaypal
 import com.example.demo.ConfigService
 import com.example.demo.SebTestConf
 import com.example.demo.domain.pizza.paypal.PaypalClient
@@ -17,7 +18,8 @@ import javax.ws.rs.core.Response
 @Api("/config")
 class ConfigResource @Inject constructor(
         private val configService: ConfigService,
-        private val sebtest: SebTestConf,
+        private val configExample: SebTestConf,
+        private val configPaypal: ConfigPaypal,
         private val paypalClient: PaypalClient
 ) {
 
@@ -35,7 +37,8 @@ class ConfigResource @Inject constructor(
         LOGGER.info("/foo $this")
 
         val responseData = mapOf<String, Any?>(
-                "sebtest" to sebtest,
+                "configExample" to configExample,
+                "configPaypal" to configPaypal,
                 "paypalClient.apiKey" to paypalClient.getApiKey(),
                 "configService.configPaypal" to configService.configPaypal,
                 "configService.configGoogle" to configService.configGoogle

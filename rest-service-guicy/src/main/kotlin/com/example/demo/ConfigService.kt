@@ -7,7 +7,7 @@ import javax.inject.Singleton
 class ConfigService @Inject constructor(
         private val configuration: RestServiceConfiguration
 ) {
-    val seb = configuration.sebTestConf
+    val configExample = configuration.configExample
     val configGoogle = configuration.configGoogle
     val configPaypal = configuration.configPaypal
 }
