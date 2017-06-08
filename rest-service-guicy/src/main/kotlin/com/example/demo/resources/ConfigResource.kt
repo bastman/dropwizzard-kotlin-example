@@ -1,8 +1,8 @@
 package com.example.demo.resources
 
+import com.example.demo.ConfigExample
 import com.example.demo.ConfigPaypal
 import com.example.demo.ConfigService
-import com.example.demo.SebTestConf
 import com.example.demo.domain.pizza.paypal.PaypalClient
 import com.example.demo.logging.AppLogger
 import io.swagger.annotations.Api
@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response
 @Api("/config")
 class ConfigResource @Inject constructor(
         private val configService: ConfigService,
-        private val configExample: SebTestConf,
+        private val configExample: ConfigExample,
         private val configPaypal: ConfigPaypal,
         private val paypalClient: PaypalClient
 ) {
