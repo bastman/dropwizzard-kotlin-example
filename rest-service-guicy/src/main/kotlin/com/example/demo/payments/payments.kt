@@ -1,5 +1,6 @@
 package com.example.demo.payments
 
+import java.util.Currency
 import javax.inject.Inject
 
 
@@ -20,8 +21,8 @@ class PaymentService @Inject constructor(
     val processorCreditCard: CreditCardProcessorService,
     val processorBankTransfer: BankTransferProcessorService
 ) {
-    fun getPaymentMethods(currency:String):List<PaymentMethod> {
-        return when(currency.toLowerCase()) {
+    fun getPaymentMethods(currency:Currency):List<PaymentMethod> {
+        return when(currency.currencyCode.toLowerCase()) {
             "usd" -> {
                 listOf(
                     PaymentMethod.CreditCard,
@@ -35,7 +36,7 @@ class PaymentService @Inject constructor(
         }
     }
 
-    fun pay(paymentMethod: PaymentMethod, currency: String, amount: Double):PaymentResult {
+    fun pay(paymentMethod: PaymentMethod, currency: Currency, amount: Double):PaymentResult {
         val status = when(paymentMethod) {
             PaymentMethod.CreditCard -> {
                 val processor = processorCreditCard.suggestProcessor()
@@ -59,7 +60,7 @@ class PaymentService @Inject constructor(
 
 data class PaymentResult(
     val status: Status,
-    val currency: String,
+    val currency: Currency,
     val amount: Double
 ) {
     enum class Status() {

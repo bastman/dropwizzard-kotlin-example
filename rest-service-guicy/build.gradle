@@ -82,7 +82,8 @@ dependencies {
     //compile group: 'io.federecio', name: 'dropwizard-swagger', version: '0.7.0'
     compile group: 'com.smoketurner', name: 'dropwizard-swagger', version: '1.1.0-1'
 
-
+    // funktionale
+    compile 'org.funktionale:funktionale-try:1.1'
 
 
     /*
