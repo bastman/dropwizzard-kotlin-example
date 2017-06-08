@@ -6,6 +6,7 @@ import com.example.demo.ConfigPaypal
 import com.example.demo.ConfigService
 import com.example.demo.domain.pizza.paypal.PaypalClient
 import com.example.demo.logging.AppLogger
+
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import javax.inject.Inject
@@ -23,9 +24,11 @@ class ConfigResource @Inject constructor(
         private val configPaypal: ConfigPaypal,
         private val paypalClient: PaypalClient,
         private val configGoogle: ConfigGoogle
-) {
+    ) {
 
     private val LOGGER = AppLogger.get(this::class.java)
+
+
 
     @Produces(MediaType.APPLICATION_JSON)
     @GET
