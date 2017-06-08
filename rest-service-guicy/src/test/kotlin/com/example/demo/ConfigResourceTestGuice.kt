@@ -13,7 +13,7 @@ import javax.inject.Singleton
 import javax.ws.rs.core.Response
 
 
-internal class ConfigResourceTest {
+internal class ConfigResourceTestGuice {
 
 
     var configServiceStub: ConfigService = {

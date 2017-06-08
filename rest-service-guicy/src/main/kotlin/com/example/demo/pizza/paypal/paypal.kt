@@ -12,7 +12,6 @@ import javax.inject.Singleton
 class PaypalClient @Inject constructor(private val paypal: ConfigPaypal) {
 
     //  @Inject constructor(config: RestServiceConfiguration) : this(paypal = config.configPaypal)
-
     fun getApiKey(): String = paypal.apiKey
 }
 
